@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+<h1 th:text="${title}"></h1>
+
+<div>
+    <a th:href="@{/list}">Volver</a>
+    <form th:action="@{/form}" method="post" th:object="${product}" enctype="multipart/form-data">
+        <!--        <input th:if="${product.id != null}" type="hidden" th:field="*{id}"/>-->
+        <!--        <input th:if="${product.photo != null}" type="hidden" th:field="*{photo}"/>-->
+        <div>
+            <label for="name">Nombre</label>
+            <div><input id="name" type="text" th:field="*{name}"/></div>
+            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+        <div>
+            <label for="price">Precio</label>
+            <div><input id="price" type="number" th:field="*{price}"/></div>
+            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+        </div>
+        <div>
+            <label for="createAt">Fecha</label>
+            <div><input id="createAt" type="date" th:field="*{createAt}"/></div>
+        </div>
+        <div>
+            <label for="category.id">Categoría</label>
+            <div>
+                <select id="category.id" th:field="*{category.id}">
+                    <option value="">-- seleccione categoría --</option>
+                    <option th:each="catego: ${categories}" th:value="${catego.id}" th:text="${catego.name}"></option>
+                </select>
+            </div>
+                <small th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></small>
+        </div>
+        <div>
+            <label for="file">Foto</label>
+            <div>
+                <input id="file" type="file" name="file"/>
+            </div>
+        </div>
+        <div>
+            <div>
+                <button type="submit" th:text="${textButton}"/>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
